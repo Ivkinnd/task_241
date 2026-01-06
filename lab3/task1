@@ -1,0 +1,61 @@
+# Файловые системы в Linux
+
+1. Основные типы файловых систем
+Для постоянного хранения: ext4, XFS, Btrfs, NTFS, FAT32
+Для сетевого доступа: NFS, SMB/CIFS
+Специальные системные: proc, sys, tmpfs, devpts
+
+2. Классификация файловых систем
+По структуре хранения: журналируемые (ext4, NTFS) и обычные (FAT32)
+По назначению: локальные, сетевые, виртуальные
+По функциональности: с поддержкой прав доступа, квот, шифрования
+
+3. Распространенные в Linux
+ext4 - стандартная для большинства дистрибутивов
+XFS - для работы с большими файлами
+Btrfs - современная с расширенными возможностями
+Виртуальные: proc, sysfs, tmpfs
+
+4. Создание файловой системы
+Подготовка раздела и создание ФС
+fdisk /dev/sdX  # создание раздела
+mkfs.ext4 /dev/sdX1  # форматирование в ext4
+
+5. Подключение дисков
+Монтирование - подключение раздела к дереву каталогов
+
+Временное монтирование
+mount /dev/sdX1 /mnt/точка
+
+Постоянное (через /etc/fstab)
+/dev/sdX1 /mnt/data ext4 defaults 0 0
+
+6. Специальные файловые системы
+
+proc - информация о процессах и системе
+mount | grep 'proc'
+Вывод: proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+
+tmpfs - временные файлы в памяти
+mount | grep 'tmpfs'
+Вывод точек монтирования: /tmp, /dev/shm, /run
+
+sysfs - информация об устройствах
+mount | grep 'sysfs'
+Вывод: sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
+
+cifs - доступ к сетевым ресурсам Windows
+mount -t cifs //server/share /mnt/share -o username=user
+
+7. Получение системной информации
+
+Информация о процессоре
+cat /proc/cpuinfo | head -20
+
+Состояние памяти
+cat /proc/meminfo | grep -E 'MemTotal|MemFree|MemAvailable|Swap'
+
+Дополнительная информация
+cat /proc/version    # версия ядра
+cat /proc/uptime     # время работы
+cat /proc/loadavg    # загрузка системы
